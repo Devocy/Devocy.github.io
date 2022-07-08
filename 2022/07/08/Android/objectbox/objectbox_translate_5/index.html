@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>【译】ObjectBox官方文档——响应式 | Devocy'Blog</title><meta name="keywords" content="数据库"><meta name="author" content="Devocy"><meta name="copyright" content="Devocy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="【译】ObjectBox官方文档——响应式 转载请注明出处第一次翻译文档，水平有限，如有任何错误和不妥，望指正。此外如想知道与Realm 和 GreenDAO的对比请查看这篇博客官网：ObjectBox官方示例：Github  ObjectBox使您的应用程序可以轻松地对数据变化做出反应:  data observers 响应式扩展 Rxjava扩展库  这使得在处理线程细节的同时，可以轻松地设">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】ObjectBox官方文档——响应式">
+<meta property="og:url" content="https://devocy.github.io/2022/07/08/Android/objectbox/objectbox_translate_5/index.html">
+<meta property="og:site_name" content="Devocy&#39;Blog">
+<meta property="og:description" content="【译】ObjectBox官方文档——响应式 转载请注明出处第一次翻译文档，水平有限，如有任何错误和不妥，望指正。此外如想知道与Realm 和 GreenDAO的对比请查看这篇博客官网：ObjectBox官方示例：Github  ObjectBox使您的应用程序可以轻松地对数据变化做出反应:  data observers 响应式扩展 Rxjava扩展库  这使得在处理线程细节的同时，可以轻松地设">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://devocy.github.io/images/default_img_7.jpeg">
+<meta property="article:published_time" content="2022-07-08T04:44:58.801Z">
+<meta property="article:modified_time" content="2022-07-08T04:44:58.801Z">
+<meta property="article:author" content="Devocy">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://devocy.github.io/images/default_img_7.jpeg"><link rel="shortcut icon" href="/images/avatar.png"><link rel="canonical" href="https://devocy.github.io/2022/07/08/Android/objectbox/objectbox_translate_5/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【译】ObjectBox官方文档——响应式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-07-08 04:44:58'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/default_img_7.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Devocy'Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【译】ObjectBox官方文档——响应式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-07-08T04:44:58.801Z" title="更新于 2022-07-08 04:44:58">2022-07-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/">Android</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【译】ObjectBox官方文档——响应式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/objectbox/objectbox-java/master/logo.png"></p>
+<h1 id="【译】ObjectBox官方文档——响应式"><a href="#【译】ObjectBox官方文档——响应式" class="headerlink" title="【译】ObjectBox官方文档——响应式"></a>【译】ObjectBox官方文档——响应式</h1><blockquote>
+<p><strong>转载请注明出处</strong><br>第一次翻译文档，水平有限，如有任何错误和不妥，望指正。此外如想知道与<strong>Realm</strong> 和 <strong>GreenDAO</strong>的对比请查看这篇<a target="_blank" rel="noopener" href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2017/0926/8551.html">博客</a><br>官网：<a target="_blank" rel="noopener" href="http://objectbox.io/">ObjectBox</a><br>官方示例：<a target="_blank" rel="noopener" href="https://github.com/objectbox/objectbox-java">Github</a></p>
+</blockquote>
+<p><strong>ObjectBox</strong>使您的应用程序可以轻松地对数据变化做出反应:</p>
+<ul>
+<li><strong>data observers</strong></li>
+<li>响应式扩展</li>
+<li><strong>Rxjava</strong>扩展库</li>
+</ul>
+<p>这使得在处理线程细节的同时，可以轻松地设置数据流。</p>
+<h2 id="响应式观察者：一个简单的例子"><a href="#响应式观察者：一个简单的例子" class="headerlink" title="响应式观察者：一个简单的例子"></a>响应式观察者：一个简单的例子</h2><p>让我们从一个示例开始演示如何使用响应式数据观察者:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Query&lt;Task&gt; query = taskBox.query().equal(Task_.complete, <span class="literal">false</span>).build();</span><br><span class="line">query.subscribe().on(AndroidScheduler.mainThread()).observer(data -&gt; updateUi(data));<span class="comment">//使用Lambda表达式</span></span><br></pre></td></tr></table></figure>
+<p>第一行创建一个常规的<strong>Query</strong>对象，查询<code>task.complete == false</code>的 <strong>Task</strong> 对象。第二行将一个观察者连接到 <strong>Query</strong> 对象上。这会发生了什么:</p>
+<ul>
+<li>查询会在后台执行</li>
+<li>每次查询完成，观察者都会得到返回的数据</li>
+<li>在这之后，每当 <strong>Task</strong> 发生改变时，查询将再次执行</li>
+<li>一旦更新了查询结果，它们就会被发送给观察者</li>
+<li>这个观察者将在 <strong>Android</strong> 主线程调用</li>
+</ul>
+<p>所以他虽然仅仅只是两行代码，但是有很多细节发生在幕后，现在，让我们深入细节。</p>
+<h2 id="基础数据观察者"><a href="#基础数据观察者" class="headerlink" title="基础数据观察者"></a>基础数据观察者</h2><p>当对象发生改变，<strong>ObjectBox</strong> 会通知订阅的观察者。这些观察者可以订阅特定类型对象的变化（通过 <strong>BoxStore</strong>）或查询结果。您需要实现<code>io.objectbox.reactive.DataObserver</code>接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">DataObserver</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">onData</span><span class="params">(T data)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个观察者在必要时将被 <strong>ObjectBox</strong> 调用:通常在订阅和数据更改后不久。</p>
+<p><strong>注意</strong>:<code>onData()</code>是异步调用的，并与发生数据更改的线程分离(比如提交事务的线程)。</p>
+<h3 id="观察常规变化"><a href="#观察常规变化" class="headerlink" title="观察常规变化"></a>观察常规变化</h3><p><strong>BoxStore</strong> 允许 <strong>DataObserver</strong> 订阅特定类型对象。假设您想要观察任务列表应用程序的任务对象:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DataObserver&lt;Class&gt; taskObserver = ...;</span><br><span class="line">boxStore.subscribe(Task.class).observer(taskObserver);</span><br></pre></td></tr></table></figure>
+<p>现在，如果应用程序存储更多的任务，<strong>ObjectBox</strong> 将调用<code>taskObserver.onData(task.class)</code>来通知您更改。</p>
+<p><strong>注意</strong>:还有一个没有参数的<code>subscribe()</code>。它表示观察者订阅接收所有可用对象类的更改。</p>
+<h3 id="观察查询"><a href="#观察查询" class="headerlink" title="观察查询"></a>观察查询</h3><p><strong>ObjectBox</strong> 让我们构建查询来查找符合某些条件的对象。查询是 <strong>ObjectBox</strong> 的重要组成部分：每当您需要特定的数据集时，您可能会使用查询。</p>
+<p>结合查询和观察结果，可以获得一个方便而强大的工具：当相关数据发生变化时，查询将为观察者自动提供新的结果。假设你在你的应用程序中显示了一个待办事项列表。您可以使用 <strong>DataObserver</strong> 来获取尚未完成的所有任务，并将它们传递给一个方法<code>updateUi()</code>(注意我们使用lambda语法):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Query&lt;Task&gt; query = taskBox.query().equal(Task_.completed, <span class="literal">false</span>).build();</span><br><span class="line">query.subscribe().observer(data -&gt; updateUi(data));</span><br></pre></td></tr></table></figure>
+<p>我们的观察者什么时候被调用？当一个观察者被订阅时，查询将在一个单独的线程中运行。一旦查询结果可用，它将被传递给观察者。这是对观察者的第一次调用。</p>
+<p>现在，假设一个任务被更改并存储在 <strong>ObjectBox</strong> 中。在哪里以及如何进行都不重要;它可能是标记任务完成的用户，也可能是在与服务器同步时添加额外任务的后端线程。无论如何，查询将以更新的查询结果通知所有观察者。</p>
+<p>请注意，此模式可以极大地简化代码：在一个地方可以让您的数据更新用户界面。没有单独的初始化代码，没有事件的连接，没有重新运行查询等。</p>
+<h3 id="观察者和事务"><a href="#观察者和事务" class="headerlink" title="观察者和事务"></a>观察者和事务</h3><p>在提交事务之后发生 <strong>Observer</strong> 通知。对于某些场景，了解事务局限尤为重要。如果您调用<code>box.put()</code>或<code>remove()</code>，开始并提交隐式事务。例如，这个代码片段将会在<code>User.class</code>上触发两次数据观察者：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box.put(friendUser);</span><br><span class="line">box.put(myUser);</span><br></pre></td></tr></table></figure>
+<p>有几种方法可以将多个操作合并到一个事务中，例如，使用 <strong>BoxStore</strong> 类中的<code>runInTx()</code>或<code>callInTx()</code>方法。对于我们的简单示例，我们可以简单地使用<code>put()</code>接受多个对象的重载方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">box.put(friendUser, myUser);</span><br></pre></td></tr></table></figure>
+<p>这将产生一个事务，因此 <strong>DataObserver</strong> 只会通知一次。</p>
+<h3 id="订阅和取消"><a href="#订阅和取消" class="headerlink" title="订阅和取消"></a>订阅和取消</h3><p>当你调用<code>observer()</code>,它将返回一个实现<code>io.objectbox.reactive.DataSubscription</code>接口的订阅对象:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">DataSubscription</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">cancel</span><span class="params">()</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isCanceled</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，如果您打算在以后取消订阅您的 <strong>DataObserver</strong>，那么最好保存到数据库。调用<code>cancel()</code>让 <strong>ObjectBox</strong> 知道，不应再通知观察者：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">DataSubscription</span> <span class="variable">subscription</span> <span class="operator">=</span> boxStore.subscribe().observer(myObserver);</span><br><span class="line"> </span><br><span class="line"><span class="comment">// At some later point:</span></span><br><span class="line">subscription.cancel();</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>:在 <strong>Android</strong> 上，通常会在<code>onCreate()</code>&#x2F;<code>onStart()</code>&#x2F;<code>onResume()</code>生命周期方法中创建订阅，并在其对应<code>onDestroy()</code>&#x2F;<code>onStop()</code>&#x2F;<code>onPause()</code>中取消它。</p>
+<h2 id="响应式扩展"><a href="#响应式扩展" class="headerlink" title="响应式扩展"></a>响应式扩展</h2><p>在第一部分中，您看到了数据观察器如何帮助您保持您的应用程序最新状态。但还有更多：<strong>ObjectBox</strong> 为常规任务提供了简单而方便的响应式扩展。虽然大多数都是由 <strong>RxJava</strong> 启发的，但实际上并不是基于 <strong>RxJava</strong> 。<strong>ObjectBox</strong> 带来了它自己的特性，因为不是所有开发人员都熟悉 <strong>RxJava</strong>（对于<strong>RxJava ObjectBox</strong>库，参见下面）。我们不想把复杂性（ <strong>Rx</strong> 几乎就像一种新语言）和 <strong>RxJava</strong> （~ 10k方法）的大小强加给每一个人。所以，我们让它保持简单和整洁。</p>
+<h3 id="线程调度"><a href="#线程调度" class="headerlink" title="线程调度"></a>线程调度</h3><p>在 <strong>Android</strong> 上，<strong>UI</strong> 更新必须在主线程上进行。幸运的是，<strong>ObjectBox</strong> 允许将观察者从后台线程切换到主线程。让我们来看看上面的待办事项示例的修改版:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Query&lt;Task&gt; query = taskBox.query().equal(Task_.complete, <span class="literal">false</span>).build();</span><br><span class="line">query.subscribe().on(AndroidScheduler.mainThread()).observer(data -&gt; updateUi(data));</span><br></pre></td></tr></table></figure>
+<p><code>on()</code>方法告诉我们希望我们的观察者被调用的位置。<code>AndroidScheduler.mainThread()</code>是一个内置的调度程序的实现。或者，您可以使用自定义<code>Looper</code>创建一个<code>AndroidScheduler</code>，或通过实现<code>io.objectbox.reactive.Scheduler</code>接口建立一个完全定制的调度器。</p>
+<h3 id="Data-Transform"><a href="#Data-Transform" class="headerlink" title="Data Transform"></a>Data Transform</h3><p>也许你想在把数据移交给观察者之前改变数据。比方说，您希望跟踪每个类型的所有存储对象的计数。<strong>BoxStore</strong> 订阅为您提供对象的类，这个示例向您展示如何将它们转换为实际的对象计数:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">boxStore.subscribe()</span><br><span class="line">    .transform(clazz -&gt; <span class="keyword">return</span> boxStore.boxFor(clazz).count())</span><br><span class="line">    .observer(count -&gt; updateCount(count));</span><br></pre></td></tr></table></figure>
+<p>注意，<strong>transform</strong> 操作接受一个<code>Class</code>类型的参数并返回一个<code>Long</code>类型的数值。因此 <strong>DataObserver</strong> 接收 <code>Long</code> 类型的对象计数作为<code>onData()</code>中的参数。</p>
+<p>虽然 <strong>lambda</strong> 语法很好而且很简短，但还是让我们看一下<code>io.objectbox.reactive.Transformer</code>接口，以了解<code>transform()</code>方法作为一个参数所期望的内容:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">DataTransformer</span>&lt;FROM, TO&gt; &#123;</span><br><span class="line">    TO <span class="title function_">transform</span><span class="params">(FROM source)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于 <strong>transform</strong> 的一些说明:</p>
+<ul>
+<li><strong>Transform</strong> 并不需要实际 “转换” 任何数据。从技术上讲，返回接收到的相同数据，并且只处理(或不使用)它是很好的。</li>
+<li><strong>Transform</strong> 总是异步执行的。可以很好的执行耗时操作。</li>
+</ul>
+<h3 id="ErrorObserver"><a href="#ErrorObserver" class="headerlink" title="ErrorObserver"></a>ErrorObserver</h3><p>也许您注意到一个 <strong>transformer</strong> 可能会抛出任何类型的异常。另外，<strong>DataObserver</strong> 可能抛出一个<code>RuntimeException</code>。在这两种情况下，您都可以创建一个 <strong>ErrorObserver</strong> 来接收发生的异常的通知。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ErrorObserver</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">onError</span><span class="params">(Throwable th)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当抛出异常时，<code>onError()</code>将被调用，当然这需要在<code>subscribe()</code>之后。</p>
+<h3 id="Single-Notifications-vs-Only-Changes"><a href="#Single-Notifications-vs-Only-Changes" class="headerlink" title="Single Notifications vs. Only-Changes"></a>Single Notifications vs. Only-Changes</h3><p>当您订阅一个查询时，<strong>DataObserver</strong> 会在默认情况下得到以下两个选项:</p>
+<ul>
+<li>初始查询结果（在订阅之后）</li>
+<li>更新的查询结果（底层数据被更改）</li>
+</ul>
+<p>有时你可能只对其中的一个感兴趣。这就是<code>single()</code>和<code>onlyChanges()</code>的方法（请在<code>subscribe()</code>之后调用它们）。单一订阅的特殊之处在于，一旦观察者被通知，它们就会自动被取消。您仍然可以手动取消它们，以确保在某个时间点上不会对观察者进行调用。</p>
+<h3 id="弱引用"><a href="#弱引用" class="headerlink" title="弱引用"></a>弱引用</h3><p>有时，弱引用<code>DataObserver</code>是件好事。注意，为了确定流，最好在可能的情况下显式地取消订阅。如果这没有吓到您，请在<code>subscribe()</code>后使用<code>weak()</code>。</p>
+<h3 id="线程的概述"><a href="#线程的概述" class="headerlink" title="线程的概述"></a>线程的概述</h3><p>总结前面讨论过的线程：</p>
+<ul>
+<li>查询执行在后台线程上运行（此为任务专用）</li>
+<li><strong>DataTransformer</strong> 在后台线程上运行(此为任务专用)</li>
+<li><strong>DataObserver</strong> 和 <strong>ErrorObserver</strong> 运行在后台线程，除非调用<code>on()</code>方法指定一个调度器</li>
+</ul>
+<h2 id="Rxjava扩展库"><a href="#Rxjava扩展库" class="headerlink" title="Rxjava扩展库"></a>Rxjava扩展库</h2><p>通过设计，在 <strong>ObjectBox</strong> 核心没有对Rx进行任何依赖。但是正如您在 <strong>ObjectBox</strong> 中看到的那样，您仍然可以使用简单的方法来转换数据、异步处理、线程调度和一次(单个)通知。如果，您仍然想要与强大的 <strong>RxJava 2</strong> 集成（我们没有支持<strong>RxJava 1</strong>的计划）。为此，我们创建了 <strong>ObjectBox RxJava扩展库</strong>。它需要额外依赖（确保检查最新版本，可能不是这样）:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="string">&#x27;io.objectbox:objectbox-rxjava:0.9.8-RC4&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这样，您就可以使用 <strong>RxQuery</strong> 和 <strong>RxBoxStore</strong> 。两者都提供使用<strong>RxJava</strong>进行订阅的静态方法。</p>
+<p>对于一般对象更改，可以使用 <strong>RxBoxStore</strong> 创建一个可观察的对象。<strong>RxQuery</strong> 允许订阅查询对象：</p>
+<ul>
+<li><strong>FLowable</strong></li>
+<li><strong>Observable</strong></li>
+<li><strong>Single</strong></li>
+</ul>
+<p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Query</span> <span class="variable">query</span> <span class="operator">=</span> box.query().build();</span><br><span class="line">RxQuery.observable(query).subscribe(<span class="built_in">this</span>);</span><br></pre></td></tr></table></figure>
+<p>扩展库是在<a target="_blank" rel="noopener" href="https://github.com/greenrobot/ObjectBoxRxJava">GitHub</a>上作为一个独立的开放源码项目进行管理的。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://Devocy.github.io">Devocy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://devocy.github.io/2022/07/08/Android/objectbox/objectbox_translate_5/">https://devocy.github.io/2022/07/08/Android/objectbox/objectbox_translate_5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Devocy.github.io" target="_blank">Devocy'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><div class="post_share"><div class="social-share" data-image="/images/default_img_7.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/07/08/Android/objectbox/objectbox_translate_4/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_3.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【译】ObjectBox官方文档——查询</div></div></a></div><div class="next-post pull-right"><a href="/2022/07/08/Android/objectbox/objectbox_translate_6/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_6.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【译】ObjectBox官方文档——关系</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/07/08/Android/objectbox/objectbox_translate_1/" title="【译】ObjectBox官方文档——简介与配置"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/objectbox/objectbox-java/master/logo.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">【译】ObjectBox官方文档——简介与配置</div></div></a></div><div><a href="/2022/07/08/Android/objectbox/objectbox_translate_2/" title="【译】ObjectBox官方文档——实体类注解"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_6.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">【译】ObjectBox官方文档——实体类注解</div></div></a></div><div><a href="/2022/07/08/Android/objectbox/objectbox_translate_3/" title="【译】ObjectBox官方文档——ObjectBox与Kotlin"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_4.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">【译】ObjectBox官方文档——ObjectBox与Kotlin</div></div></a></div><div><a href="/2022/07/08/Android/objectbox/objectbox_translate_4/" title="【译】ObjectBox官方文档——查询"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_3.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">【译】ObjectBox官方文档——查询</div></div></a></div><div><a href="/2022/07/08/Android/objectbox/objectbox_translate_6/" title="【译】ObjectBox官方文档——关系"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_6.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">【译】ObjectBox官方文档——关系</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Devocy</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Devocy"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Devocy" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E3%80%90%E8%AF%91%E3%80%91ObjectBox%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E2%80%94%E2%80%94%E5%93%8D%E5%BA%94%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">【译】ObjectBox官方文档——响应式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E5%BC%8F%E8%A7%82%E5%AF%9F%E8%80%85%EF%BC%9A%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.1.</span> <span class="toc-text">响应式观察者：一个简单的例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E8%A7%82%E5%AF%9F%E8%80%85"><span class="toc-number">1.2.</span> <span class="toc-text">基础数据观察者</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%82%E5%AF%9F%E5%B8%B8%E8%A7%84%E5%8F%98%E5%8C%96"><span class="toc-number">1.2.1.</span> <span class="toc-text">观察常规变化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%82%E5%AF%9F%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.2.</span> <span class="toc-text">观察查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E5%92%8C%E4%BA%8B%E5%8A%A1"><span class="toc-number">1.2.3.</span> <span class="toc-text">观察者和事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A2%E9%98%85%E5%92%8C%E5%8F%96%E6%B6%88"><span class="toc-number">1.2.4.</span> <span class="toc-text">订阅和取消</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E5%BC%8F%E6%89%A9%E5%B1%95"><span class="toc-number">1.3.</span> <span class="toc-text">响应式扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6"><span class="toc-number">1.3.1.</span> <span class="toc-text">线程调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Transform"><span class="toc-number">1.3.2.</span> <span class="toc-text">Data Transform</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ErrorObserver"><span class="toc-number">1.3.3.</span> <span class="toc-text">ErrorObserver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Single-Notifications-vs-Only-Changes"><span class="toc-number">1.3.4.</span> <span class="toc-text">Single Notifications vs. Only-Changes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B1%E5%BC%95%E7%94%A8"><span class="toc-number">1.3.5.</span> <span class="toc-text">弱引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E8%BF%B0"><span class="toc-number">1.3.6.</span> <span class="toc-text">线程的概述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rxjava%E6%89%A9%E5%B1%95%E5%BA%93"><span class="toc-number">1.4.</span> <span class="toc-text">Rxjava扩展库</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_1/" title="【译】ObjectBox官方文档——简介与配置"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/objectbox/objectbox-java/master/logo.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——简介与配置"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_1/" title="【译】ObjectBox官方文档——简介与配置">【译】ObjectBox官方文档——简介与配置</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_2/" title="【译】ObjectBox官方文档——实体类注解"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_6.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——实体类注解"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_2/" title="【译】ObjectBox官方文档——实体类注解">【译】ObjectBox官方文档——实体类注解</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_3/" title="【译】ObjectBox官方文档——ObjectBox与Kotlin"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_4.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——ObjectBox与Kotlin"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_3/" title="【译】ObjectBox官方文档——ObjectBox与Kotlin">【译】ObjectBox官方文档——ObjectBox与Kotlin</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_4/" title="【译】ObjectBox官方文档——查询"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_3.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——查询"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_4/" title="【译】ObjectBox官方文档——查询">【译】ObjectBox官方文档——查询</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_5/" title="【译】ObjectBox官方文档——响应式"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_7.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——响应式"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_5/" title="【译】ObjectBox官方文档——响应式">【译】ObjectBox官方文档——响应式</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Devocy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

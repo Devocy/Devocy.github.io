@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Python基础——迭代 | Devocy'Blog</title><meta name="keywords" content="基础"><meta name="author" content="Devocy"><meta name="copyright" content="Devocy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在Python中，如果给定一个list或tuple，我们可以通过for循环来遍历这个list或tuple，这种遍历我们成为迭代（Iteration）。通过for ... in来完成的，for循环不仅可以用在list或tuple上，还可以作用在其他任何可迭代对象上。因此，迭代操作就是对于一个集合，无论该集合是有序还是无序，我们用 for 循环总是可以依次取出集合的每一个元素。 注意: 集合是指包含">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python基础——迭代">
+<meta property="og:url" content="https://devocy.github.io/2022/07/08/python/basic/Python%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E8%BF%AD%E4%BB%A3/index.html">
+<meta property="og:site_name" content="Devocy&#39;Blog">
+<meta property="og:description" content="在Python中，如果给定一个list或tuple，我们可以通过for循环来遍历这个list或tuple，这种遍历我们成为迭代（Iteration）。通过for ... in来完成的，for循环不仅可以用在list或tuple上，还可以作用在其他任何可迭代对象上。因此，迭代操作就是对于一个集合，无论该集合是有序还是无序，我们用 for 循环总是可以依次取出集合的每一个元素。 注意: 集合是指包含">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://devocy.github.io/images/default_img_4.jpeg">
+<meta property="article:published_time" content="2022-07-08T04:44:58.801Z">
+<meta property="article:modified_time" content="2022-07-08T04:44:58.801Z">
+<meta property="article:author" content="Devocy">
+<meta property="article:tag" content="基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://devocy.github.io/images/default_img_4.jpeg"><link rel="shortcut icon" href="/images/avatar.png"><link rel="canonical" href="https://devocy.github.io/2022/07/08/python/basic/Python%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E8%BF%AD%E4%BB%A3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Python基础——迭代',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-07-08 04:44:58'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/default_img_4.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Devocy'Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python基础——迭代</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-07-08T04:44:58.801Z" title="更新于 2022-07-08 04:44:58">2022-07-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python基础——迭代"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><hr>
+<p>在<strong>Python</strong>中，如果给定一个<code>list</code>或<code>tuple</code>，我们可以通过<code>for</code>循环来遍历这个<code>list</code>或<code>tuple</code>，这种遍历我们成为<strong>迭代（Iteration）</strong>。通过<code>for ... in</code>来完成的，<code>for</code>循环不仅可以用在<code>list</code>或<code>tuple</code>上，还可以作用在其他任何可迭代对象上。因此，迭代操作就是对于一个集合，无论该集合是有序还是无序，我们用 <code>for</code> 循环总是可以依次取出集合的每一个元素。</p>
+<p><strong>注意</strong>: 集合是指包含一组元素的数据结构，我们已经介绍的包括：</p>
+<ol>
+<li>有序集合：<code>list</code>，<code>tuple</code>，<code>str</code>和<code>unicode</code>；</li>
+<li>无序集合：<code>set</code></li>
+<li>无序集合并且具有 <strong>key-value</strong> 对：<code>dict</code></li>
+</ol>
+<h3 id="索引迭代"><a href="#索引迭代" class="headerlink" title="索引迭代"></a>索引迭代</h3><p>在迭代的过程中如果既想要得到索引，又想要拿到值。那么可以通过使用 <strong>enumerate()</strong> 函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>L = [<span class="string">&#x27;Adam&#x27;</span>, <span class="string">&#x27;Lisa&#x27;</span>, <span class="string">&#x27;Bart&#x27;</span>, <span class="string">&#x27;Paul&#x27;</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> index, name <span class="keyword">in</span> <span class="built_in">enumerate</span>(L):</span><br><span class="line"><span class="meta">... </span>    <span class="built_in">print</span> index, <span class="string">&#x27;-&#x27;</span>, name</span><br><span class="line"><span class="meta">... </span></span><br><span class="line"><span class="number">0</span> - Adam</span><br><span class="line"><span class="number">1</span> - Lisa</span><br><span class="line"><span class="number">2</span> - Bart</span><br><span class="line"><span class="number">3</span> - Paul</span><br></pre></td></tr></table></figure>
+
+<p>看上去无法理解，但是其实原理就是在其内部把它转换成以<code>tuple</code>为元素的<code>list</code>，再利用多返回值返回。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;Adam&#x27;, &#x27;Lisa&#x27;, &#x27;Bart&#x27;, &#x27;Paul&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>变成了类似：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(0, &#x27;Adam&#x27;), (1, &#x27;Lisa&#x27;), (2, &#x27;Bart&#x27;), (3, &#x27;Paul&#x27;)]</span><br></pre></td></tr></table></figure>
+
+<p>可见，索引迭代也不是真的按索引访问，而是由 <strong>enumerate()</strong> 函数自动把每个元素变成 <strong>(index, element)</strong> 这样的<code>tuple</code>，再迭代，就同时获得了索引和元素本身。</p>
+<h3 id="迭代dict的value"><a href="#迭代dict的value" class="headerlink" title="迭代dict的value"></a>迭代dict的value</h3><p>我们在对<code>dict</code>使用<code>for...in</code>语句是就清楚，他迭代返回的是<code>dict</code>的<strong>key</strong>值，那么如果我想迭代他的<strong>value</strong>呢？在<code>dict</code>中有个<code>values</code>的函数，他就可以返回<code>dict</code>的所有<strong>value</strong>，另外一个<code>itervalues</code>函数他也能达到相同的效果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">d = &#123; <span class="string">&#x27;Adam&#x27;</span>: <span class="number">95</span>, <span class="string">&#x27;Lisa&#x27;</span>: <span class="number">85</span>, <span class="string">&#x27;Bart&#x27;</span>: <span class="number">59</span> &#125;</span><br><span class="line"><span class="built_in">print</span> d.values()</span><br><span class="line"><span class="comment"># [85, 95, 59]</span></span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> d.values():   </span><br><span class="line">    <span class="built_in">print</span> v</span><br><span class="line"><span class="comment"># 85</span></span><br><span class="line"><span class="comment"># 95</span></span><br><span class="line"><span class="comment"># 59</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">d = &#123; <span class="string">&#x27;Adam&#x27;</span>: <span class="number">95</span>, <span class="string">&#x27;Lisa&#x27;</span>: <span class="number">85</span>, <span class="string">&#x27;Bart&#x27;</span>: <span class="number">59</span> &#125;</span><br><span class="line"><span class="built_in">print</span> d.itervalues()</span><br><span class="line"><span class="comment"># &lt;dictionary-valueiterator object at 0x106adbb50&gt;</span></span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> d.itervalues():</span><br><span class="line">    <span class="built_in">print</span> v</span><br><span class="line"><span class="comment"># 85</span></span><br><span class="line"><span class="comment"># 95</span></span><br><span class="line"><span class="comment"># 59</span></span><br></pre></td></tr></table></figure>
+
+<p>那这两个方法有何不同之处呢？</p>
+<ol>
+<li><p><strong>values()</strong> 方法实际上把一个 <code>dict</code> 转换成了包含 <strong>value</strong> 的<code>list</code>。</p>
+</li>
+<li><p>但是 <strong>itervalues()</strong> 方法不会转换，它会在迭代过程中依次从 <code>dict</code> 中取出 <strong>value</strong>，所以 <code>itervalues()</code> 方法比 <code>values()</code> 方法节省了生成 <code>list</code> 所需的内存。</p>
+</li>
+<li><p>打印 <code>itervalues()</code> 发现它返回一个 <strong>dictionary-valueiterator</strong> 对象，这说明在Python中，<strong>for 循环可作用的迭代对象远不止 <code>list</code>，<code>tuple</code>，<code>str</code>，<code>unicode</code>，<code>dict</code>等</strong>，任何可迭代对象都可以作用于<code>for</code>循环，而内部如何迭代我们通常并不用关心。</p>
+</li>
+</ol>
+<p><strong>如果一个对象说自己可迭代，那我们就直接用 <code>for</code> 循环去迭代它，可见，迭代是一种抽象的数据操作，它不对迭代对象内部的数据有任何要求。</strong></p>
+<h3 id="迭代dict的key和value"><a href="#迭代dict的key和value" class="headerlink" title="迭代dict的key和value"></a>迭代dict的key和value</h3><p>通过<code>dict</code>的<code>items</code>函数，我们可以同时拿到<code>dict</code>的<strong>key</strong>和<strong>value</strong>，它的内部就是把每一个键值对转换成一个<strong>tuple</strong>，把整体转换成一个以<strong>tuple</strong>为元素类型的<code>list</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; d = &#123; <span class="string">&#x27;Adam&#x27;</span>: 95, <span class="string">&#x27;Lisa&#x27;</span>: 85, <span class="string">&#x27;Bart&#x27;</span>: 59 &#125;</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span> d.items()</span></span><br><span class="line">[(&#x27;Lisa&#x27;, 85), (&#x27;Adam&#x27;, 95), (&#x27;Bart&#x27;, 59)]</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，<code>items()</code> 方法把<code>dict</code>对象转换成了包含<code>tuple</code>的<code>list</code>，我们对这个<code>list</code>进行迭代，可以同时获得<strong>key</strong>和<strong>value</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="keyword">for</span> key, value <span class="keyword">in</span> d.items():</span></span><br><span class="line">...     print key, &#x27;:&#x27;, value</span><br><span class="line">... </span><br><span class="line">Lisa : 85</span><br><span class="line">Adam : 95</span><br><span class="line">Bart : 59</span><br></pre></td></tr></table></figure>
+
+<p>和 <code>values()</code> 有一个 <code>itervalues()</code> 类似， <code>items()</code> 也有一个对应的 <code>iteritems()</code>，<code>iteritems()</code> 不把<code>dict</code>转换成<code>list</code>，而是在迭代过程中不断给出 <code>tuple</code>，所以， <code>iteritems()</code> 不占用额外的内存。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://Devocy.github.io">Devocy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://devocy.github.io/2022/07/08/python/basic/Python%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E8%BF%AD%E4%BB%A3/">https://devocy.github.io/2022/07/08/python/basic/Python%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E8%BF%AD%E4%BB%A3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Devocy.github.io" target="_blank">Devocy'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80/">基础</a></div><div class="post_share"><div class="social-share" data-image="/images/default_img_4.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/07/08/python/basic/Python%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD%E5%92%8C%E5%BE%AA%E7%8E%AF/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_0.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Python基础——切片</div></div></a></div><div class="next-post pull-right"><a href="/2022/07/08/android/basic/component/Activity/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_2.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Activity总结</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/07/08/python/basic/Python%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94Dict%E5%92%8CSet/" title="Python基础——Dict和Set"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_5.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">Python基础——Dict和Set</div></div></a></div><div><a href="/2022/07/08/python/basic/Python%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94List%E4%B8%8Etuple/" title="Python基础——List与tuple"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_1.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">Python基础——List与tuple</div></div></a></div><div><a href="/2022/07/08/python/basic/Python%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0/" title="Python基础——函数"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_6.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">Python基础——函数</div></div></a></div><div><a href="/2022/07/08/python/basic/Python%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E5%88%87%E7%89%87(Slice)/" title="Python基础——切片"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_2.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">Python基础——切片</div></div></a></div><div><a href="/2022/07/08/python/basic/Python%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E5%88%97%E8%A1%A8%E7%94%9F%E6%88%90%E5%BC%8F/" title="Python基础——列表生成式"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_4.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">Python基础——列表生成式</div></div></a></div><div><a href="/2022/07/08/python/basic/Python%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%8F%98%E9%87%8F/" title="Python基础————基础数据类型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_2.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">Python基础————基础数据类型</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Devocy</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Devocy"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Devocy" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E8%BF%AD%E4%BB%A3"><span class="toc-number">1.</span> <span class="toc-text">索引迭代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3dict%E7%9A%84value"><span class="toc-number">2.</span> <span class="toc-text">迭代dict的value</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3dict%E7%9A%84key%E5%92%8Cvalue"><span class="toc-number">3.</span> <span class="toc-text">迭代dict的key和value</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_1/" title="【译】ObjectBox官方文档——简介与配置"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/objectbox/objectbox-java/master/logo.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——简介与配置"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_1/" title="【译】ObjectBox官方文档——简介与配置">【译】ObjectBox官方文档——简介与配置</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_2/" title="【译】ObjectBox官方文档——实体类注解"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_6.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——实体类注解"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_2/" title="【译】ObjectBox官方文档——实体类注解">【译】ObjectBox官方文档——实体类注解</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_3/" title="【译】ObjectBox官方文档——ObjectBox与Kotlin"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_4.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——ObjectBox与Kotlin"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_3/" title="【译】ObjectBox官方文档——ObjectBox与Kotlin">【译】ObjectBox官方文档——ObjectBox与Kotlin</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_4/" title="【译】ObjectBox官方文档——查询"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_3.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——查询"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_4/" title="【译】ObjectBox官方文档——查询">【译】ObjectBox官方文档——查询</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_5/" title="【译】ObjectBox官方文档——响应式"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_7.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——响应式"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_5/" title="【译】ObjectBox官方文档——响应式">【译】ObjectBox官方文档——响应式</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Devocy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

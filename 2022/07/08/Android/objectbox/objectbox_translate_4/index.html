@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>【译】ObjectBox官方文档——查询 | Devocy'Blog</title><meta name="keywords" content="数据库"><meta name="author" content="Devocy"><meta name="copyright" content="Devocy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="【译】ObjectBox官方文档——查询 转载请注明出处第一次翻译文档，水平有限，如有任何错误和不妥，望指正。此外如想知道与Realm 和 GreenDAO的对比请查看这篇博客官网：ObjectBox官方示例：Github  ObjectBox查询会返回符合用户定义标准的实体对象。您可以使用QueryBuilder类来指定标准并创建查询对象。查询类将在实际运行查询后返回与之匹配的对象。 Quer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】ObjectBox官方文档——查询">
+<meta property="og:url" content="https://devocy.github.io/2022/07/08/Android/objectbox/objectbox_translate_4/index.html">
+<meta property="og:site_name" content="Devocy&#39;Blog">
+<meta property="og:description" content="【译】ObjectBox官方文档——查询 转载请注明出处第一次翻译文档，水平有限，如有任何错误和不妥，望指正。此外如想知道与Realm 和 GreenDAO的对比请查看这篇博客官网：ObjectBox官方示例：Github  ObjectBox查询会返回符合用户定义标准的实体对象。您可以使用QueryBuilder类来指定标准并创建查询对象。查询类将在实际运行查询后返回与之匹配的对象。 Quer">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://devocy.github.io/images/default_img_3.jpeg">
+<meta property="article:published_time" content="2022-07-08T04:44:58.801Z">
+<meta property="article:modified_time" content="2022-07-08T04:44:58.801Z">
+<meta property="article:author" content="Devocy">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://devocy.github.io/images/default_img_3.jpeg"><link rel="shortcut icon" href="/images/avatar.png"><link rel="canonical" href="https://devocy.github.io/2022/07/08/Android/objectbox/objectbox_translate_4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【译】ObjectBox官方文档——查询',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-07-08 04:44:58'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/default_img_3.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Devocy'Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【译】ObjectBox官方文档——查询</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-07-08T04:44:58.801Z" title="更新于 2022-07-08 04:44:58">2022-07-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/">Android</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【译】ObjectBox官方文档——查询"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/objectbox/objectbox-java/master/logo.png"></p>
+<h1 id="【译】ObjectBox官方文档——查询"><a href="#【译】ObjectBox官方文档——查询" class="headerlink" title="【译】ObjectBox官方文档——查询"></a>【译】ObjectBox官方文档——查询</h1><blockquote>
+<p><strong>转载请注明出处</strong><br>第一次翻译文档，水平有限，如有任何错误和不妥，望指正。此外如想知道与Realm 和 GreenDAO的对比请查看这篇<a target="_blank" rel="noopener" href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2017/0926/8551.html">博客</a><br>官网：<a target="_blank" rel="noopener" href="http://objectbox.io/">ObjectBox</a><br>官方示例：<a target="_blank" rel="noopener" href="https://github.com/objectbox/objectbox-java">Github</a></p>
+</blockquote>
+<p><strong>ObjectBox</strong>查询会返回符合用户定义标准的实体对象。您可以使用<strong>QueryBuilder</strong>类来指定标准并创建查询对象。查询类将在实际运行查询后返回与之匹配的对象。</p>
+<h2 id="QueryBuilder"><a href="#QueryBuilder" class="headerlink" title="QueryBuilder"></a>QueryBuilder</h2><p><code>QueryBuilder&lt;T&gt;</code>允许您为您的实体构建自定义查询。它与<strong>实体类</strong>生成的<strong>属性类</strong>一起使用。</p>
+<p>这个例子假定有一个实体类<code>User</code>及其生成的属性类<code>User_</code>。</p>
+<ul>
+<li><strong>简单的条件示例</strong>：在所有用户中查询 <strong>first_name</strong> 为 <strong>“Joe”</strong>的用户:<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;User&gt; joes = userBox.query().equal(User_.firstName, <span class="string">&quot;Joe&quot;</span>).build().find();</span><br></pre></td></tr></table></figure></li>
+<li><strong>复杂条件示例</strong>： 查询 <strong>first_name</strong> 为<strong>“Joe”</strong>，在<strong>1970</strong>年之后出生，<strong>last_name</strong> 以 <strong>“O”</strong> 开头的用户<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">QueryBuilder&lt;User&gt; builder = userBox.query();</span><br><span class="line">builder.equal(User_.firstName, <span class="string">&quot;Joe&quot;</span>)</span><br><span class="line">        .greater(User_.yearOfBirth, <span class="number">1970</span>)</span><br><span class="line">        .startsWith(User_.lastName, <span class="string">&quot;O&quot;</span>);</span><br><span class="line">List&lt;User&gt; youngJoes = builder.build().find();</span><br></pre></td></tr></table></figure>
+对于所有可用的标准的条件，请参考<a target="_blank" rel="noopener" href="http://objectbox.io/files/objectbox-java/current/io/objectbox/query/QueryBuilder.html">QueryBuilder</a>类。</li>
+</ul>
+<h2 id="Query"><a href="#Query" class="headerlink" title="Query"></a>Query</h2><p><code>Query</code>是通过调用<strong>QueryBuilder</strong>的<strong>Build</strong>函数的创建：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Query&lt;User&gt; query = builder.build();</span><br></pre></td></tr></table></figure>
+<h3 id="Finding-objects"><a href="#Finding-objects" class="headerlink" title="Finding objects"></a>Finding objects</h3><p>在已匹配的对象中检索有两种方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回与查询匹配的所有实体</span></span><br><span class="line">List&lt;User&gt; joes = query.find();</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 只返回第一个结果，如果没有，则返回null</span></span><br><span class="line"><span class="type">User</span> <span class="variable">joe</span> <span class="operator">=</span> query.findFirst();</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 找到条件匹配的唯一对象。如果没有则返回null,如果不是唯一对象，则抛出DbException</span></span><br><span class="line"><span class="type">User</span> <span class="variable">joe</span> <span class="operator">=</span> query.findUnique();</span><br></pre></td></tr></table></figure>
+<p>要返回匹配查询的所有实体，只需调用<code>find()</code>。</p>
+<p>要返回第一个结果，使用<code>findFirst()</code>。</p>
+<p>如果您希望结果是唯一的请调用 <code>findUnique()</code>。它会给你一个单一的结果或<code>null</code>，如果多个结果则会抛出异常。</p>
+<h3 id="复用查询对象与参数"><a href="#复用查询对象与参数" class="headerlink" title="复用查询对象与参数"></a>复用查询对象与参数</h3><p><code>Query</code>对象允许多次执行查询，为了方便复用，相应的在创建<code>Query</code>对象时为<code>QueryBuilder</code>设置的参数也是可以被更改的</p>
+<p>让我们来看看例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Query&lt;User&gt; query = userBox.query().equal(User_.firstName, <span class="string">&quot;&quot;</span>).build();</span><br><span class="line">List&lt;User&gt; joes = query.setParameter(User_.firstName, <span class="string">&quot;Joe&quot;</span>).find();</span><br><span class="line">List&lt;User&gt; jakes = query.setParameter(User_.firstName, <span class="string">&quot;Jake&quot;</span>).find();</span><br></pre></td></tr></table></figure>
+<p>这里我们使用一个查询对象来找到两组用户，每个<code>User</code>都有一个特定的名字。注意，在构建<code>Query</code>对象时，我们仍然需要初始化 <code>firstName</code>属性的值。如果我们总是使用<code>.setparameter()</code>来覆盖值，我们可以在开始构建Query&#96;时传递 <strong>空字符串</strong>。</p>
+<p>对于经常运行的查询，缓存查询对象是很好的做法。</p>
+<h3 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h3><p>有时候，您只需要查询的一个子集，例如在用户界面中显示的前10个元素。当您拥有大量的实体，并且您不能仅使用查询条件限制结果时，这一点特别有用(并且灵活)。构建的<code>Query&lt;T&gt;</code>有一个<code>.find(long offset, long limit)</code>的方法，带有偏移量和限制参数:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Query&lt;User&gt; query = userBox.query().equal(UserProperties.FirstName, <span class="string">&quot;Joe&quot;</span>).build();</span><br><span class="line">List&lt;User&gt; joes = query.find(<span class="comment">/** offset by */</span> <span class="number">10</span>, <span class="comment">/** limit to */</span> <span class="number">5</span> <span class="comment">/** results */</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>offset</code>:跳过第一个结果的偏移量</li>
+<li><code>limit</code>：查询结果的返回数限制</li>
+</ul>
+<h3 id="查询结果懒加载"><a href="#查询结果懒加载" class="headerlink" title="查询结果懒加载"></a>查询结果懒加载</h3><p>为了延迟加载查询结果，<strong>Query</strong> 提供<code>findLazy()</code>和<code>findLazyCached()</code>方法，它们返回的查询结果是<code>LazyList</code>。</p>
+<p><a target="_blank" rel="noopener" href="http://objectbox.io/files/objectbox-java/current/io/objectbox/query/LazyList.html"><strong>LazyList</strong></a> 是一个线程安全、不可修改的列表，它只在被访问时才会延迟读取实体。根据所调用的<code>find</code>方法，延迟列表将被 <strong>缓存</strong> 或 <strong>不缓存</strong>。缓存的列表会存储多次访问的对象，以避免多次加载实体。列表的某些功能仅限于缓存的列表(例如需要整个列表的功能)。有关更多细节，<a target="_blank" rel="noopener" href="http://objectbox.io/files/objectbox-java/current/io/objectbox/query/LazyList.html">请参阅 <strong>LazyList</strong> 类文档。</a></p>
+<h2 id="映射关系的加载"><a href="#映射关系的加载" class="headerlink" title="映射关系的加载"></a>映射关系的加载</h2><p>关系默认是延迟加载的:当您第一次访问它时，它将执行一个数据库查找来获取数据(后续访问将读取缓存中的值)。虽然这个查找是一个使用 <strong>ObjectBox</strong> 的快速操作，如果有些情况下您想要避免它。<strong>ObjectBox</strong> 允许您立即加载关系，以完全避免这些查找。您可以使用<code>querybuilder.eager()</code>方法。</p>
+<h2 id="计量查询-Aggregates（大雾？-￣ェ￣"><a href="#计量查询-Aggregates（大雾？-￣ェ￣" class="headerlink" title="计量查询 Aggregates（大雾？  (￣ェ￣;) )"></a>计量查询 Aggregates（大雾？  (￣ェ￣;) )</h2><p>有时，您不希望从查询返回对象，而是获取属性的合计值。<strong>ObjectBox</strong> 支持以下方法(每个都以属性作为参数):</p>
+<ul>
+<li><code>min</code>&#x2F;<code>minDouble</code>：找到与查询匹配的所有对象的给定属性的最小值。</li>
+<li><code>max</code>&#x2F;<code>maxDouble</code>：查找最大值。</li>
+<li><code>sum</code>&#x2F;<code>sumDouble</code>：计算所有值的总和。注意：<code>non-double</code>版本检测的溢出并在这种情况下抛出异常。(雾)</li>
+<li><code>avg</code>：计算所有值的平均值（始终为双倍）。</li>
+</ul>
+<p>此外，您可以通过调用count()来获得结果数量，而不是自己获取结果。</p>
+<h2 id="删除对象"><a href="#删除对象" class="headerlink" title="删除对象"></a>删除对象</h2><p>要删除匹配查询的所有对象，可以调用<code>query.remove()</code>。(没错，就一句话)</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://Devocy.github.io">Devocy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://devocy.github.io/2022/07/08/Android/objectbox/objectbox_translate_4/">https://devocy.github.io/2022/07/08/Android/objectbox/objectbox_translate_4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Devocy.github.io" target="_blank">Devocy'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><div class="post_share"><div class="social-share" data-image="/images/default_img_3.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/07/08/Android/objectbox/objectbox_translate_3/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_4.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【译】ObjectBox官方文档——ObjectBox与Kotlin</div></div></a></div><div class="next-post pull-right"><a href="/2022/07/08/Android/objectbox/objectbox_translate_5/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_7.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【译】ObjectBox官方文档——响应式</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/07/08/Android/objectbox/objectbox_translate_1/" title="【译】ObjectBox官方文档——简介与配置"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/objectbox/objectbox-java/master/logo.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">【译】ObjectBox官方文档——简介与配置</div></div></a></div><div><a href="/2022/07/08/Android/objectbox/objectbox_translate_2/" title="【译】ObjectBox官方文档——实体类注解"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_6.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">【译】ObjectBox官方文档——实体类注解</div></div></a></div><div><a href="/2022/07/08/Android/objectbox/objectbox_translate_3/" title="【译】ObjectBox官方文档——ObjectBox与Kotlin"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_4.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">【译】ObjectBox官方文档——ObjectBox与Kotlin</div></div></a></div><div><a href="/2022/07/08/Android/objectbox/objectbox_translate_5/" title="【译】ObjectBox官方文档——响应式"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_7.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">【译】ObjectBox官方文档——响应式</div></div></a></div><div><a href="/2022/07/08/Android/objectbox/objectbox_translate_6/" title="【译】ObjectBox官方文档——关系"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_6.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-08</div><div class="title">【译】ObjectBox官方文档——关系</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Devocy</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Devocy"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Devocy" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E3%80%90%E8%AF%91%E3%80%91ObjectBox%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E2%80%94%E2%80%94%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.</span> <span class="toc-text">【译】ObjectBox官方文档——查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#QueryBuilder"><span class="toc-number">1.1.</span> <span class="toc-text">QueryBuilder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Query"><span class="toc-number">1.2.</span> <span class="toc-text">Query</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Finding-objects"><span class="toc-number">1.2.1.</span> <span class="toc-text">Finding objects</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E7%94%A8%E6%9F%A5%E8%AF%A2%E5%AF%B9%E8%B1%A1%E4%B8%8E%E5%8F%82%E6%95%B0"><span class="toc-number">1.2.2.</span> <span class="toc-text">复用查询对象与参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.3.</span> <span class="toc-text">分页查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.2.4.</span> <span class="toc-text">查询结果懒加载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB%E7%9A%84%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.3.</span> <span class="toc-text">映射关系的加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E9%87%8F%E6%9F%A5%E8%AF%A2-Aggregates%EF%BC%88%E5%A4%A7%E9%9B%BE%EF%BC%9F-%EF%BF%A3%E3%82%A7%EF%BF%A3"><span class="toc-number">1.4.</span> <span class="toc-text">计量查询 Aggregates（大雾？  (￣ェ￣;) )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.5.</span> <span class="toc-text">删除对象</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_1/" title="【译】ObjectBox官方文档——简介与配置"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/objectbox/objectbox-java/master/logo.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——简介与配置"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_1/" title="【译】ObjectBox官方文档——简介与配置">【译】ObjectBox官方文档——简介与配置</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_2/" title="【译】ObjectBox官方文档——实体类注解"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_6.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——实体类注解"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_2/" title="【译】ObjectBox官方文档——实体类注解">【译】ObjectBox官方文档——实体类注解</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_3/" title="【译】ObjectBox官方文档——ObjectBox与Kotlin"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_4.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——ObjectBox与Kotlin"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_3/" title="【译】ObjectBox官方文档——ObjectBox与Kotlin">【译】ObjectBox官方文档——ObjectBox与Kotlin</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_4/" title="【译】ObjectBox官方文档——查询"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_3.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——查询"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_4/" title="【译】ObjectBox官方文档——查询">【译】ObjectBox官方文档——查询</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/Android/objectbox/objectbox_translate_5/" title="【译】ObjectBox官方文档——响应式"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/default_img_7.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【译】ObjectBox官方文档——响应式"/></a><div class="content"><a class="title" href="/2022/07/08/Android/objectbox/objectbox_translate_5/" title="【译】ObjectBox官方文档——响应式">【译】ObjectBox官方文档——响应式</a><time datetime="2022-07-08T04:44:58.801Z" title="发表于 2022-07-08 04:44:58">2022-07-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Devocy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
